@@ -4,7 +4,7 @@
 #include <ctime>
 #include <iostream>
 
-enum class OrderType
+enum class OrderSide
 {
     BUY,
     SELL,
@@ -20,13 +20,13 @@ enum class OrderStatus
 struct Order
 {
     int id;
-    OrderType type;
+    OrderSide side;
     double price;
     double amount;
     time_t timestamp;
     OrderStatus status;
 
-    Order(int id, OrderType type, double price, double amount);
+    Order(int id, OrderSide side, double price, double amount);
 
     friend std::ostream &operator<<(std::ostream &os, const Order &order);
 };
