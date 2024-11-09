@@ -2,6 +2,7 @@
 #define ORDER_H
 
 #include <ctime>
+#include <iostream>
 
 enum class OrderType
 {
@@ -26,6 +27,8 @@ struct Order
     OrderStatus status;
 
     Order(int id, OrderType type, double price, double amount);
+
+    friend std::ostream &operator<<(std::ostream &os, const Order &order);
 };
 
 #endif

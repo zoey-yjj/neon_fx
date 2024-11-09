@@ -14,6 +14,7 @@ public:
     OrderBook();
 
     int addOrder(OrderType type, double price, double amount);
+    std::vector<Order> getOrders() const;
 };
 
 #endif
