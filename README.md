@@ -9,7 +9,7 @@ NeonFX is a lightweight, high-performance EUR/USD forex trading platform built i
 ### Develop Steps
 
 - support symbol:
-    - start with EURUSD, will support multiple currency pairs
+    - start with EUR/USD, will support multiple currency pairs
 - order type only market maker:
     - default post only
 
