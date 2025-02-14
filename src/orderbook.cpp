@@ -19,6 +19,16 @@ int OrderBook::addOrder(OrderSide side, double price, double amount)
     return order.id;
 }
 
+const std::map<double, std::vector<Order>, std::greater<double>> &OrderBook::getBids()
+{
+    return bids;
+}
+
+const std::map<double, std::vector<Order>> &OrderBook::getAsks()
+{
+    return asks;
+}
+
 void OrderBook::printOrders()
 {
     if (!bids.empty())
