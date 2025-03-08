@@ -5,6 +5,31 @@
 
 OrderBook::OrderBook() : nextOrderId(1) {}
 
+bool OrderBook::checkOrder(OrderSide side, double price)
+{
+    if (side == OrderSide::BUY && !asks.empty())
+    {
+        double bestAskPrice = asks.begin()->first;
+        if (price >= bestAskPrice)
+        {
+            std::cout << "Reject buy order price " << price
+                      << " >= best ask price " << bestAskPrice << std::endl;
+            return false;
+        }
+    }
+    if (side == OrderSide::SELL && !bids.empty())
+    {
+        double bestBidPrice = bids.begin()->first;
+        if (price <= bestBidPrice)
+        {
+            std::cout << "Reject sell order price " << price
+                      << " <= best bid price " << bestBidPrice << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+
 int OrderBook::addOrder(OrderSide side, double price, double amount)
 {
     Order order(nextOrderId++, side, price, amount);

@@ -26,7 +26,10 @@ int main()
             std::cout << "Amount: ";
             std::cin >> amount;
 
-            orderbook.addOrder(side, price, amount);
+            if (orderbook.checkOrder(side, price))
+            {
+                orderbook.addOrder(side, price, amount);
+            }
         }
         else if (choice == 2)
         {

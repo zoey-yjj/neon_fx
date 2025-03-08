@@ -23,6 +23,7 @@ private:
 public:
     OrderBook();
 
+    bool checkOrder(OrderSide side, double price);
     int addOrder(OrderSide side, double price, double amount);
     const std::map<double, std::vector<Order>, std::greater<double>> &getBids();
     const std::map<double, std::vector<Order>> &getAsks();
