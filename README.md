@@ -3,7 +3,7 @@
 
 ## **Overview**
 
-NeonFX is a lightweight, high-performance EUR/USD forex trading platform built in C++. It simulates real-time market conditions, order execution, and portfolio management with a clean command-line interface.
+NeonFX is a lightweight, high-performance forex trading platform built in C++. It simulates real-time market conditions, order execution, and portfolio management with a clean command-line interface.
 
 
 ## **Installation & Usage**
@@ -35,14 +35,6 @@ make test
 # Clean up
 make clean
 ```
-
-
-## **Develop Plans**
-
-- support symbol:
-    - start with EUR/USD, will support multiple currency pairs
-- order type only market maker:
-    - default post only
 
 
 ## **License**
