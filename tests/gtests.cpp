@@ -5,11 +5,14 @@ void TestAddOrders()
 {
     OrderBook book;
 
-    book.addOrder(OrderSide::BUY, 1.2, 3.5);
-    book.addOrder(OrderSide::SELL, 3.2, 3.5);
-    book.addOrder(OrderSide::BUY, 2.6, 3.5);
+    Order order1(1, OrderSide::BUY, 1.2, 3.5, Symbol::EUR_USD);
+    book.add_order(order1);
+    Order order2(2, OrderSide::SELL, 3.2, 3.5, Symbol::EUR_USD);
+    book.add_order(order2);
+    Order order3(3, OrderSide::BUY, 2.6, 3.5, Symbol::EUR_USD);
+    book.add_order(order3);
 
-    const auto &bids = book.getBids();
+    const auto &bids = book.get_bids();
     assert(bids.size() == 2);
     assert(bids.begin()->first == 2.6);
 }
@@ -17,10 +20,12 @@ void TestAddOrders()
 void TestPricePriority()
 {
     OrderBook book;
-    book.addOrder(OrderSide::BUY, 1.0, 1.0);
-    book.addOrder(OrderSide::BUY, 2.0, 1.0);
+    Order order1(1, OrderSide::BUY, 1.0, 1.0, Symbol::EUR_USD);
+    book.add_order(order1);
+    Order order2(2, OrderSide::BUY, 2.0, 1.0, Symbol::EUR_USD);
+    book.add_order(order2);
 
-    assert(book.getBids().begin()->first == 2.0);
+    assert(book.get_bids().begin()->first == 2.0);
 }
 
 int main()

@@ -18,16 +18,14 @@ private:
     std::map<double, std::vector<Order>, std::greater<double>> bids;
     // ask orders match from high -> low
     std::map<double, std::vector<Order>> asks;
-    int nextOrderId;
 
 public:
-    OrderBook();
+    bool check_order(OrderSide side, double price);
+    bool add_order(const Order &order);
 
-    bool checkOrder(OrderSide side, double price);
-    int addOrder(OrderSide side, double price, double amount);
-    const std::map<double, std::vector<Order>, std::greater<double>> &getBids();
-    const std::map<double, std::vector<Order>> &getAsks();
-    void printOrders();
+    const std::map<double, std::vector<Order>, std::greater<double>> &get_bids();
+    const std::map<double, std::vector<Order>> &get_asks();
+    void print_orders();
 };
 
 #endif

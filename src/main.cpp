@@ -1,10 +1,10 @@
-#include "order.h"
-#include "orderbook.h"
+#include "order_manager.h"
 #include <iostream>
+#include <limits>
 
 int main()
 {
-    OrderBook orderbook;
+    OrderManager order_manager;
     while (true)
     {
         std::cout << "\n1. Submit Order\n2. Print Order Book\n3. Exit\n";
@@ -13,9 +13,28 @@ int main()
 
         if (choice == 1)
         {
+            SymbolUtils::PrintSymbols();
+            std::cout << "Select Symbol (1-"
+                      << static_cast<int>(Symbol::NUM_SYMBOLS) << "): ";
+
+            int symbolChoice;
+            while (!(std::cin >> symbolChoice) || symbolChoice < 1 ||
+                   symbolChoice > static_cast<int>(Symbol::NUM_SYMBOLS))
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input. Try again: ";
+            }
+            Symbol symbol = static_cast<Symbol>(symbolChoice - 1);
+
             std::cout << "Side (1=BUY, 2=SELL): ";
             int i_side;
-            std::cin >> i_side;
+            while (!(std::cin >> i_side) || symbolChoice < 1 || symbolChoice > 2)
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input. Try again: ";
+            }
             OrderSide side = (i_side == 1) ? OrderSide::BUY : OrderSide::SELL;
 
             double price;
@@ -26,14 +45,11 @@ int main()
             std::cout << "Amount: ";
             std::cin >> amount;
 
-            if (orderbook.checkOrder(side, price))
-            {
-                orderbook.addOrder(side, price, amount);
-            }
+            order_manager.submit_order(side, price, amount, symbol);
         }
         else if (choice == 2)
         {
-            orderbook.printOrders();
+            order_manager.print_orderbooks();
         }
         else if (choice == 3)
         {

@@ -3,37 +3,37 @@
 #include <vector>
 #include <iostream>
 
-OrderBook::OrderBook() : nextOrderId(1) {}
-
-bool OrderBook::checkOrder(OrderSide side, double price)
+bool OrderBook::check_order(OrderSide side, double price)
 {
     if (side == OrderSide::BUY && !asks.empty())
     {
-        double bestAskPrice = asks.begin()->first;
-        if (price >= bestAskPrice)
+        double best_ask_price = asks.begin()->first;
+        if (price >= best_ask_price)
         {
             std::cout << "Reject buy order price " << price
-                      << " >= best ask price " << bestAskPrice << std::endl;
+                      << " >= best ask price " << best_ask_price << std::endl;
             return false;
         }
     }
     if (side == OrderSide::SELL && !bids.empty())
     {
-        double bestBidPrice = bids.begin()->first;
-        if (price <= bestBidPrice)
+        double best_bid_price = bids.begin()->first;
+        if (price <= best_bid_price)
         {
             std::cout << "Reject sell order price " << price
-                      << " <= best bid price " << bestBidPrice << std::endl;
+                      << " <= best bid price " << best_bid_price << std::endl;
             return false;
         }
     }
     return true;
 }
 
-int OrderBook::addOrder(OrderSide side, double price, double amount)
+bool OrderBook::add_order(const Order &order)
 {
-    Order order(nextOrderId++, side, price, amount);
-    if (side == OrderSide::BUY)
+    if (!check_order(order.side, order.price))
+        return false;
+
+    if (order.side == OrderSide::BUY)
     {
         bids[order.price].push_back(order);
     }
@@ -41,20 +41,20 @@ int OrderBook::addOrder(OrderSide side, double price, double amount)
     {
         asks[order.price].push_back(order);
     }
-    return order.id;
+    return true;
 }
 
-const std::map<double, std::vector<Order>, std::greater<double>> &OrderBook::getBids()
+const std::map<double, std::vector<Order>, std::greater<double>> &OrderBook::get_bids()
 {
     return bids;
 }
 
-const std::map<double, std::vector<Order>> &OrderBook::getAsks()
+const std::map<double, std::vector<Order>> &OrderBook::get_asks()
 {
     return asks;
 }
 
-void OrderBook::printOrders()
+void OrderBook::print_orders()
 {
     if (!bids.empty())
     {

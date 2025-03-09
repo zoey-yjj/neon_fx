@@ -1,6 +1,7 @@
 #ifndef ORDER_H
 #define ORDER_H
 
+#include "symbol.h"
 #include <ctime>
 #include <iostream>
 
@@ -20,13 +21,14 @@ enum class OrderStatus
 struct Order
 {
     int id;
+    Symbol symbol;
     OrderSide side;
     double price;
     double amount;
     time_t timestamp;
     OrderStatus status;
 
-    Order(int id, OrderSide side, double price, double amount);
+    Order(int id, OrderSide side, double price, double amount, Symbol symbol);
 
     friend std::ostream &operator<<(std::ostream &os, const Order &order);
 };
