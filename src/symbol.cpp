@@ -1,6 +1,6 @@
+#include "symbol.h"
 #include <iostream>
 #include <string>
-#include "symbol.h"
 
 namespace SymbolUtils
 {
