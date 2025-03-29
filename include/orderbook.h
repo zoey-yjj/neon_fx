@@ -15,16 +15,16 @@ class OrderBook
 {
 private:
     // bid orders need to match from high -> low
-    std::map<double, std::vector<Order>, std::greater<double>> bids;
+    std::map<double, std::vector<Order *>, std::greater<double>> bids;
     // ask orders match from high -> low
-    std::map<double, std::vector<Order>> asks;
+    std::map<double, std::vector<Order *>> asks;
 
 public:
     bool check_order(OrderSide side, double price);
-    bool add_order(const Order &order);
+    bool add_order(Order *order);
 
-    const std::map<double, std::vector<Order>, std::greater<double>> &get_bids();
-    const std::map<double, std::vector<Order>> &get_asks();
+    const std::map<double, std::vector<Order *>, std::greater<double>> &get_bids();
+    const std::map<double, std::vector<Order *>> &get_asks();
     void print_orders();
 };
 

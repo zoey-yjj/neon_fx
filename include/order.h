@@ -3,7 +3,6 @@
 
 #include "symbol.h"
 #include <ctime>
-#include <iostream>
 
 enum class OrderSide
 {
@@ -30,7 +29,7 @@ struct Order
 
     Order(int id, OrderSide side, double price, double amount, Symbol symbol);
 
-    friend std::ostream &operator<<(std::ostream &os, const Order &order);
+    void print();
 };
 
 #endif

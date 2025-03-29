@@ -28,28 +28,28 @@ bool OrderBook::check_order(OrderSide side, double price)
     return true;
 }
 
-bool OrderBook::add_order(const Order &order)
+bool OrderBook::add_order(Order *order)
 {
-    if (!check_order(order.side, order.price))
+    if (!check_order((*order).side, (*order).price))
         return false;
 
-    if (order.side == OrderSide::BUY)
+    if ((*order).side == OrderSide::BUY)
     {
-        bids[order.price].push_back(order);
+        bids[(*order).price].push_back(order);
     }
     else
     {
-        asks[order.price].push_back(order);
+        asks[(*order).price].push_back(order);
     }
     return true;
 }
 
-const std::map<double, std::vector<Order>, std::greater<double>> &OrderBook::get_bids()
+const std::map<double, std::vector<Order *>, std::greater<double>> &OrderBook::get_bids()
 {
     return bids;
 }
 
-const std::map<double, std::vector<Order>> &OrderBook::get_asks()
+const std::map<double, std::vector<Order *>> &OrderBook::get_asks()
 {
     return asks;
 }
@@ -61,9 +61,9 @@ void OrderBook::print_orders()
         std::cout << "\n\033[32m============= BID ORDERS (BUY) =============\033[0m\n";
         for (const auto &[_, orders] : bids)
         {
-            for (const auto &order : orders)
+            for (const auto order : orders)
             {
-                std::cout << order << std::endl;
+                order->print();
             }
         }
     }
@@ -77,9 +77,9 @@ void OrderBook::print_orders()
         std::cout << "\n\033[31m============= ASK ORDERS (SELL) =============\033[0m\n";
         for (const auto &[_, orders] : asks)
         {
-            for (const auto &order : orders)
+            for (const auto order : orders)
             {
-                std::cout << order << std::endl;
+                order->print();
             }
         }
     }
