@@ -36,6 +36,14 @@ make test
 make clean
 ```
 
+## **Supported Functions**
+
+- Add new orders
+- Delete existing orders
+- View full orderbook for each symbol
+
+TODOS:
+- Edit order
 
 ## **License**
 
