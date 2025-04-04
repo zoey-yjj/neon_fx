@@ -44,7 +44,30 @@ bool OrderBook::add_order(std::shared_ptr<Order> order_ptr)
     return true;
 }
 
-const std::map<double, std::vector<std::shared_ptr<Order>>, std::greater<double>> &OrderBook::get_bids()
+bool OrderBook::delete_order(std::shared_ptr<Order> order_ptr, int id)
+{
+    auto &book = (order_ptr->get_side() == OrderSide::BUY) ? bids : asks;
+    auto price_it = book.find(order_ptr->get_price());
+    if (price_it == book.end())
+        return false;
+    auto &orders = price_it->second;
+    auto order_it = std::find_if(
+        orders.begin(), orders.end(),
+        [&id](const std::shared_ptr<Order> &o)
+        {
+            return o->id == id;
+        });
+    if (order_it == orders.end())
+        return false;
+    orders.erase(order_it);
+    if (orders.empty())
+    {
+        book.erase(price_it);
+    }
+    return true;
+}
+
+const std::map<double, std::vector<std::shared_ptr<Order>>> &OrderBook::get_bids()
 {
     return bids;
 }

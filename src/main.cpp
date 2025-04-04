@@ -7,7 +7,7 @@ int main()
     OrderManager order_manager;
     while (true)
     {
-        std::cout << "\n1. Submit Order\n2. Print Order Book\n3. Exit\n";
+        std::cout << "\n1. Submit Order\n2. Print Order Book\n3. Delete Order\n4. Exit\n";
         int choice;
         std::cin >> choice;
 
@@ -52,6 +52,13 @@ int main()
             order_manager.print_orderbooks();
         }
         else if (choice == 3)
+        {
+            std::cout << "Delete order id: ";
+            int id;
+            std::cin >> id;
+            order_manager.delete_order(id);
+        }
+        else if (choice == 4)
         {
             break;
         }

@@ -27,9 +27,12 @@ struct Order
     time_t timestamp;
     OrderStatus status;
 
-    void print();
-
     Order(int id, OrderSide side, double price, double amount, Symbol symbol);
+
+    double get_price();
+    Symbol get_symbol();
+    OrderSide get_side();
+    void print();
 };
 
 #endif

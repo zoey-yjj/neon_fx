@@ -17,5 +17,6 @@ private:
 public:
     OrderManager();
     bool submit_order(OrderSide side, double price, double amount, Symbol symbol);
+    bool delete_order(int id);
     void print_orderbooks();
 };
