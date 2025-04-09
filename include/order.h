@@ -29,9 +29,16 @@ struct Order
 
     Order(int id, OrderSide side, double price, double amount, Symbol symbol);
 
+    int get_id();
     double get_price();
+    double get_amount();
     Symbol get_symbol();
+    int get_price_level();
     OrderSide get_side();
+
+    bool change_price(double new_price);
+    bool change_amount(double new_amount);
+
     void print();
 };
 

@@ -18,7 +18,7 @@ void TestAddOrders()
 
     const auto &bids = book.get_bids();
     assert(bids.size() == 2);
-    assert(bids.rbegin()->first == 2.6);
+    assert(bids.rbegin()->first == int(2.6 * 10000));
 }
 
 void TestPricePriority()
@@ -31,7 +31,7 @@ void TestPricePriority()
     std::shared_ptr<Order> order2_ptr = std::make_shared<Order>(order2);
     book.add_order(order2_ptr);
 
-    assert(book.get_bids().rbegin()->first == 2.0);
+    assert(book.get_bids().rbegin()->first == int(2.0 * 10000));
 }
 
 int main()

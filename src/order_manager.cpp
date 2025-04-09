@@ -7,8 +7,13 @@ bool OrderManager::submit_order(OrderSide side, double price, double amount, Sym
 {
     Order order(next_order_id++, side, price, amount, symbol);
     std::shared_ptr<Order> order_ptr = std::make_shared<Order>(order);
-    active_orders.emplace(order.id, order_ptr);
-    OrderBook &orderbook = symbol_orderbooks[symbol];
+    return submit_order_ptr(order_ptr);
+}
+
+bool OrderManager::submit_order_ptr(std::shared_ptr<Order> order_ptr)
+{
+    active_orders.emplace(order_ptr->get_id(), order_ptr);
+    OrderBook &orderbook = symbol_orderbooks[order_ptr->get_symbol()];
     return orderbook.add_order(order_ptr);
 }
 
@@ -23,6 +28,24 @@ bool OrderManager::delete_order(int id)
     OrderBook &orderbook = symbol_orderbooks[order_ptr->get_symbol()];
     orderbook.delete_order(order_ptr, id);
     active_orders.erase(it);
+    return true;
+}
+
+bool OrderManager::edit_order(int id, double new_price, double new_amount)
+{
+    auto it = active_orders.find(id);
+    if (it == active_orders.end())
+    {
+        return false;
+    }
+    std::shared_ptr<Order> order_ptr = it->second;
+    if (new_price != 0.0)
+    {
+        delete_order(id);
+        order_ptr->change_price(new_price);
+        submit_order_ptr(order_ptr);
+    }
+    order_ptr->change_amount(new_amount);
     return true;
 }
 

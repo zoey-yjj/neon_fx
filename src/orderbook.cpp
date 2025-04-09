@@ -8,7 +8,7 @@ bool OrderBook::check_order(OrderSide side, double price)
     if (side == OrderSide::BUY && !asks.empty())
     {
         double best_ask_price = asks.begin()->first;
-        if (price >= best_ask_price)
+        if (int(price * 10000) >= best_ask_price)
         {
             std::cout << "Reject buy order price " << price
                       << " >= best ask price " << best_ask_price << std::endl;
@@ -18,7 +18,7 @@ bool OrderBook::check_order(OrderSide side, double price)
     if (side == OrderSide::SELL && !bids.empty())
     {
         double best_bid_price = bids.begin()->first;
-        if (price <= best_bid_price)
+        if (int(price * 10000) <= best_bid_price)
         {
             std::cout << "Reject sell order price " << price
                       << " <= best bid price " << best_bid_price << std::endl;
@@ -30,16 +30,17 @@ bool OrderBook::check_order(OrderSide side, double price)
 
 bool OrderBook::add_order(std::shared_ptr<Order> order_ptr)
 {
-    if (!check_order(order_ptr->side, order_ptr->price))
+    if (!check_order(order_ptr->get_side(), order_ptr->get_price()))
         return false;
 
-    if (order_ptr->side == OrderSide::BUY)
+    int price_level = order_ptr->get_price_level();
+    if (order_ptr->get_side() == OrderSide::BUY)
     {
-        bids[order_ptr->price].push_back(order_ptr);
+        bids[price_level].push_back(order_ptr);
     }
     else
     {
-        asks[order_ptr->price].push_back(order_ptr);
+        asks[price_level].push_back(order_ptr);
     }
     return true;
 }
@@ -47,9 +48,14 @@ bool OrderBook::add_order(std::shared_ptr<Order> order_ptr)
 bool OrderBook::delete_order(std::shared_ptr<Order> order_ptr, int id)
 {
     auto &book = (order_ptr->get_side() == OrderSide::BUY) ? bids : asks;
-    auto price_it = book.find(order_ptr->get_price());
+    int price_level = order_ptr->get_price_level();
+    auto price_it = book.find(price_level);
     if (price_it == book.end())
+    {
+        std::cout << "delete failed due to: price level "
+                  << price_level << " is not found in orderbook" << std::endl;
         return false;
+    }
     auto &orders = price_it->second;
     auto order_it = std::find_if(
         orders.begin(), orders.end(),
@@ -58,7 +64,10 @@ bool OrderBook::delete_order(std::shared_ptr<Order> order_ptr, int id)
             return o->id == id;
         });
     if (order_it == orders.end())
+    {
+        std::cout << "delete failed due to: order is not found in price level" << std::endl;
         return false;
+    }
     orders.erase(order_it);
     if (orders.empty())
     {
@@ -67,12 +76,12 @@ bool OrderBook::delete_order(std::shared_ptr<Order> order_ptr, int id)
     return true;
 }
 
-const std::map<double, std::vector<std::shared_ptr<Order>>> &OrderBook::get_bids()
+const std::map<int, std::vector<std::shared_ptr<Order>>> &OrderBook::get_bids()
 {
     return bids;
 }
 
-const std::map<double, std::vector<std::shared_ptr<Order>>> &OrderBook::get_asks()
+const std::map<int, std::vector<std::shared_ptr<Order>>> &OrderBook::get_asks()
 {
     return asks;
 }

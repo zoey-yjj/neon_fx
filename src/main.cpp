@@ -7,7 +7,7 @@ int main()
     OrderManager order_manager;
     while (true)
     {
-        std::cout << "\n1. Submit Order\n2. Print Order Book\n3. Delete Order\n4. Exit\n";
+        std::cout << "\n1. Submit Order\n2. Print Order Book\n3. Delete Order\n4. Edit Order\n5. Exit\n";
         int choice;
         std::cin >> choice;
 
@@ -59,6 +59,19 @@ int main()
             order_manager.delete_order(id);
         }
         else if (choice == 4)
+        {
+            std::cout << "Edit order id: ";
+            int id;
+            std::cin >> id;
+            double new_price;
+            std::cout << "New price: (enter 0 if not changing) ";
+            std::cin >> new_price;
+            double new_amount;
+            std::cout << "New amount: (enter 0 if not changing) ";
+            std::cin >> new_amount;
+            order_manager.edit_order(id, new_price, new_amount);
+        }
+        else if (choice == 5)
         {
             break;
         }
