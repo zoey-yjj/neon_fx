@@ -7,6 +7,7 @@
 class OrderManager
 {
 private:
+    // price is converted to integer due to floating point issue
     // map order id to order, support fast check and remove
     std::unordered_map<int, std::shared_ptr<Order>> active_orders;
     // map symbol to sorted orderbook, support fast matching
