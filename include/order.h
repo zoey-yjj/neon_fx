@@ -36,8 +36,8 @@ struct Order
     int get_price_level();
     OrderSide get_side();
 
-    bool change_price(double new_price);
-    bool change_amount(double new_amount);
+    bool set_price(double new_price);
+    bool set_amount(double new_amount);
 
     void print();
 };

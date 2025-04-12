@@ -37,7 +37,7 @@ int Order::get_price_level()
     return int(price * 10000);
 }
 
-bool Order::change_price(double new_price)
+bool Order::set_price(double new_price)
 {
     if (new_price <= 0.0)
         return false;
@@ -45,7 +45,7 @@ bool Order::change_price(double new_price)
     return true;
 }
 
-bool Order::change_amount(double new_amount)
+bool Order::set_amount(double new_amount)
 {
     if (new_amount <= 0.0)
         return false;

@@ -42,10 +42,10 @@ bool OrderManager::edit_order(int id, double new_price, double new_amount)
     if (new_price != 0.0)
     {
         delete_order(id);
-        order_ptr->change_price(new_price);
+        order_ptr->set_price(new_price);
         submit_order_ptr(order_ptr);
     }
-    order_ptr->change_amount(new_amount);
+    order_ptr->set_amount(new_amount);
     return true;
 }
 
