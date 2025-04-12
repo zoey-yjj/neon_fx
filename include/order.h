@@ -3,6 +3,7 @@
 
 #include "symbol.h"
 #include <ctime>
+#include <memory>
 
 enum class OrderSide
 {
@@ -26,6 +27,8 @@ struct Order
     double amount;
     time_t timestamp;
     OrderStatus status;
+    std::shared_ptr<Order> prev;
+    std::shared_ptr<Order> next;
 
     Order(int id, OrderSide side, double price, double amount, Symbol symbol);
 

@@ -5,7 +5,7 @@
 
 Order::Order(int id, OrderSide side, double price, double amount, Symbol symbol)
     : id(id), symbol(symbol), side(side), price(price), amount(amount),
-      timestamp(time(nullptr)), status(OrderStatus::PENDING) {}
+      timestamp(time(nullptr)), status(OrderStatus::PENDING), prev(nullptr), next(nullptr) {}
 
 int Order::get_id()
 {
