@@ -7,9 +7,9 @@ Book::Book()
     tail->prev = head;
 }
 
-bool Book::add_order(std::shared_ptr<Order> order_ptr)
+bool Book::add_order(SharedOrderPtr order_ptr)
 {
-    std::shared_ptr<Order> prev = tail->prev;
+    SharedOrderPtr prev = tail->prev;
     tail->prev = order_ptr;
     prev->next = order_ptr;
     order_ptr->prev = prev;
@@ -17,10 +17,10 @@ bool Book::add_order(std::shared_ptr<Order> order_ptr)
     return true;
 }
 
-bool Book::remove_order(std::shared_ptr<Order> order_ptr)
+bool Book::remove_order(SharedOrderPtr order_ptr)
 {
-    std::shared_ptr<Order> prev = order_ptr->prev;
-    std::shared_ptr<Order> next = order_ptr->next;
+    SharedOrderPtr prev = order_ptr->prev;
+    SharedOrderPtr next = order_ptr->next;
     prev->next = next;
     next->prev = prev;
     order_ptr->prev = nullptr;

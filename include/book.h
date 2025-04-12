@@ -3,11 +3,11 @@
 
 struct Book
 {
-    std::shared_ptr<Order> head = nullptr;
-    std::shared_ptr<Order> tail = nullptr;
+    SharedOrderPtr head = nullptr;
+    SharedOrderPtr tail = nullptr;
 
     Book();
 
-    bool add_order(std::shared_ptr<Order> order_ptr);
-    bool remove_order(std::shared_ptr<Order> order_ptr);
+    bool add_order(SharedOrderPtr order_ptr);
+    bool remove_order(SharedOrderPtr order_ptr);
 };

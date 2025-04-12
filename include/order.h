@@ -5,6 +5,9 @@
 #include <ctime>
 #include <memory>
 
+struct Order;
+using SharedOrderPtr = std::shared_ptr<Order>;
+
 enum class OrderSide
 {
     BUY,
@@ -27,8 +30,8 @@ struct Order
     double amount;
     time_t timestamp;
     OrderStatus status;
-    std::shared_ptr<Order> prev;
-    std::shared_ptr<Order> next;
+    SharedOrderPtr prev;
+    SharedOrderPtr next;
 
     Order(int id, OrderSide side, double price, double amount, Symbol symbol);
 

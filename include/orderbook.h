@@ -16,17 +16,17 @@ class OrderBook
 {
 private:
     // bid orders need to match prices from high -> low
-    std::map<int, std::vector<std::shared_ptr<Order>>> bids;
+    std::map<int, std::vector<SharedOrderPtr>> bids;
     // ask orders match prices from high -> low
-    std::map<int, std::vector<std::shared_ptr<Order>>> asks;
+    std::map<int, std::vector<SharedOrderPtr>> asks;
 
 public:
     bool check_order(OrderSide side, double price);
-    bool add_order(std::shared_ptr<Order> order_ptr);
-    bool delete_order(std::shared_ptr<Order> order_ptr, int id);
+    bool add_order(SharedOrderPtr order_ptr);
+    bool delete_order(SharedOrderPtr order_ptr, int id);
 
-    const std::map<int, std::vector<std::shared_ptr<Order>>> &get_bids();
-    const std::map<int, std::vector<std::shared_ptr<Order>>> &get_asks();
+    const std::map<int, std::vector<SharedOrderPtr>> &get_bids();
+    const std::map<int, std::vector<SharedOrderPtr>> &get_asks();
     void print_orders();
 };
 
