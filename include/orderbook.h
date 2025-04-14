@@ -23,7 +23,7 @@ private:
 public:
     bool check_order(OrderSide side, double price);
     bool add_order(SharedOrderPtr order_ptr);
-    bool delete_order(SharedOrderPtr order_ptr, int id);
+    bool delete_order(SharedOrderPtr order_ptr);
 
     const std::map<int, Book> &get_bids();
     const std::map<int, Book> &get_asks();

@@ -36,16 +36,20 @@ bool OrderBook::add_order(SharedOrderPtr order_ptr)
     int price_level = order_ptr->get_price_level();
     if (order_ptr->get_side() == OrderSide::BUY)
     {
-        bids[price_level].add_order(order_ptr);
+        auto [book_it, inserted] = bids.try_emplace(
+            price_level, OrderSide::BUY, order_ptr->get_symbol());
+        book_it->second.add_order(order_ptr);
     }
     else
     {
-        asks[price_level].add_order(order_ptr);
+        auto [book_it, inserted] = asks.try_emplace(
+            price_level, OrderSide::SELL, order_ptr->get_symbol());
+        book_it->second.add_order(order_ptr);
     }
     return true;
 }
 
-bool OrderBook::delete_order(SharedOrderPtr order_ptr, int id)
+bool OrderBook::delete_order(SharedOrderPtr order_ptr)
 {
     auto &book = (order_ptr->get_side() == OrderSide::BUY) ? bids : asks;
     int price_level = order_ptr->get_price_level();

@@ -26,7 +26,7 @@ bool OrderManager::delete_order(int id)
     }
     SharedOrderPtr order_ptr = it->second;
     OrderBook &orderbook = symbol_orderbooks[order_ptr->get_symbol()];
-    orderbook.delete_order(order_ptr, id);
+    orderbook.delete_order(order_ptr);
     active_orders.erase(it);
     return true;
 }

@@ -58,5 +58,5 @@ void Order::print()
     std::cout << "Order #" << id
               << " [" << (side == OrderSide::BUY ? "BUY" : "SELL") << "] "
               << std::fixed << std::setprecision(4)
-              << "amount " << amount << " @ " << price << std::endl;
+              << price << " @ amount " << amount << std::endl;
 }

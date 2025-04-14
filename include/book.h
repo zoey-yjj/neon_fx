@@ -3,10 +3,10 @@
 
 struct Book
 {
-    SharedOrderPtr head = nullptr;
-    SharedOrderPtr tail = nullptr;
+    SharedOrderPtr head;
+    SharedOrderPtr tail;
 
-    Book();
+    Book(OrderSide side, Symbol symbol);
 
     bool add_order(SharedOrderPtr order_ptr);
     bool remove_order(SharedOrderPtr order_ptr);
