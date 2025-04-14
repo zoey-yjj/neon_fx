@@ -49,6 +49,11 @@ bool OrderManager::edit_order(int id, double new_price, double new_amount)
     return true;
 }
 
+SharedOrderPtr OrderManager::get_order(int id)
+{
+    return active_orders[id];
+}
+
 void OrderManager::print_orderbooks()
 {
     for (auto &[symbol, orderbook] : symbol_orderbooks)

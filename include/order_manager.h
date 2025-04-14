@@ -21,5 +21,6 @@ public:
     bool submit_order_ptr(SharedOrderPtr order_ptr);
     bool delete_order(int id);
     bool edit_order(int id, double new_price, double new_amount);
+    SharedOrderPtr get_order(int id);
     void print_orderbooks();
 };
