@@ -28,3 +28,7 @@ bool Book::remove_order(SharedOrderPtr order_ptr)
     // return true if all orders are removed, this book is empty
     return (head->next == tail);
 }
+
+void Book::print() const
+{
+}

@@ -1,7 +1,7 @@
 #ifndef ORDERBOOK_H
 #define ORDERBOOK_H
 
-#include "order.h"
+#include "book.h"
 #include <vector>
 #include <map>
 #include <memory>
@@ -16,17 +16,17 @@ class OrderBook
 {
 private:
     // bid orders need to match prices from high -> low
-    std::map<int, std::vector<SharedOrderPtr>> bids;
+    std::map<int, Book> bids;
     // ask orders match prices from high -> low
-    std::map<int, std::vector<SharedOrderPtr>> asks;
+    std::map<int, Book> asks;
 
 public:
     bool check_order(OrderSide side, double price);
     bool add_order(SharedOrderPtr order_ptr);
     bool delete_order(SharedOrderPtr order_ptr, int id);
 
-    const std::map<int, std::vector<SharedOrderPtr>> &get_bids();
-    const std::map<int, std::vector<SharedOrderPtr>> &get_asks();
+    const std::map<int, Book> &get_bids();
+    const std::map<int, Book> &get_asks();
     void print_orders();
 };
 

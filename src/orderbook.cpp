@@ -36,11 +36,11 @@ bool OrderBook::add_order(SharedOrderPtr order_ptr)
     int price_level = order_ptr->get_price_level();
     if (order_ptr->get_side() == OrderSide::BUY)
     {
-        bids[price_level].push_back(order_ptr);
+        bids[price_level].add_order(order_ptr);
     }
     else
     {
-        asks[price_level].push_back(order_ptr);
+        asks[price_level].add_order(order_ptr);
     }
     return true;
 }
@@ -57,31 +57,19 @@ bool OrderBook::delete_order(SharedOrderPtr order_ptr, int id)
         return false;
     }
     auto &orders = price_it->second;
-    auto order_it = std::find_if(
-        orders.begin(), orders.end(),
-        [&id](const SharedOrderPtr &o)
-        {
-            return o->id == id;
-        });
-    if (order_it == orders.end())
-    {
-        std::cout << "delete failed due to: order is not found in price level" << std::endl;
-        return false;
-    }
-    orders.erase(order_it);
-    if (orders.empty())
+    if (orders.remove_order(order_ptr))
     {
         book.erase(price_it);
     }
     return true;
 }
 
-const std::map<int, std::vector<SharedOrderPtr>> &OrderBook::get_bids()
+const std::map<int, Book> &OrderBook::get_bids()
 {
     return bids;
 }
 
-const std::map<int, std::vector<SharedOrderPtr>> &OrderBook::get_asks()
+const std::map<int, Book> &OrderBook::get_asks()
 {
     return asks;
 }
@@ -91,13 +79,8 @@ void OrderBook::print_orders()
     if (!bids.empty())
     {
         std::cout << "\n\033[32m============= BID ORDERS (BUY) =============\033[0m\n";
-        for (const auto &[_, orders] : bids)
-        {
-            for (const auto &order : orders)
-            {
-                order->print();
-            }
-        }
+        for (const auto &[_, book] : bids)
+            book.print();
     }
     else
     {
@@ -107,13 +90,8 @@ void OrderBook::print_orders()
     if (!asks.empty())
     {
         std::cout << "\n\033[31m============= ASK ORDERS (SELL) =============\033[0m\n";
-        for (const auto &[_, orders] : asks)
-        {
-            for (const auto &order : orders)
-            {
-                order->print();
-            }
-        }
+        for (const auto &[_, book] : asks)
+            book.print();
     }
     else
     {
